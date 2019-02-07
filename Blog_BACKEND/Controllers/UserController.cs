@@ -2,18 +2,29 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using API.Data;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Blog_BACKEND.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class UserController : ControllerBase
     {
+        private readonly BlogDbContext _blogDbContext;
+
+        public UserController(BlogDbContext blogDbContext)
+        {
+            _blogDbContext = blogDbContext;
+        }
+
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public ActionResult Get(Author )
         {
+            var user = _blogDbContext.Users
+                .include(u => u.Publications)
+                .FirstOrDefault(u => u.UserGUID == Author);
             return new string[] { "value1", "value2" };
         }
 
