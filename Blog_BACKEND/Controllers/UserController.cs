@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using API.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Blog_BACKEND.Controllers
 {
@@ -16,24 +15,41 @@ namespace Blog_BACKEND.Controllers
         public UserController(BlogDbContext blogDbContext)
         {
             _blogDbContext = blogDbContext;
+        } 
+
+        // GET /api/user
+        [HttpGet]
+        public IActionResult Get()
+        {
+            var users = _blogDbContext.User.ToList();
+
+            return Ok(users);
         }
 
-        // GET api/values
-        [HttpGet]
-        public ActionResult Get(Author )
+        // GET api/user/get?guid=6F9619FF-8B86-D011-B42D-00CF4FC964FF
+        [HttpGet("/{guid}")]
+        public IActionResult GetUser(Guid guid)
         {
-            var user = _blogDbContext.Users
-                .include(u => u.Publications)
-                .FirstOrDefault(u => u.UserGUID == Author);
-            return new string[] { "value1", "value2" };
+            var user = _blogDbContext.User.FirstOrDefault(u => u.UserGUID == guid);
+
+            if (user == null)
+                return NotFound(string.Format("Такого пользователя нет в системе", guid));
+
+            return Ok(new
+            {
+                firstName = user.FirstName,
+                userGuid = user.UserGUID,
+                creationDate = user.CreationDate,
+                lastDate = user.LastLoginDate
+            });
         }
 
         // GET api/values/5
-        [HttpGet("{id}")]
+        /*[HttpGet("{id}")]
         public ActionResult<string> Get(int id)
         {
             return "value";
-        }
+        }*/
 
         // POST api/values
         [HttpPost]

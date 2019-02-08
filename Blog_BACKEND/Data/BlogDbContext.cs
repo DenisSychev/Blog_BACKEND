@@ -6,7 +6,7 @@ namespace API.Data
     public class BlogDbContext : DbContext
     {
 
-        public DbSet<User> Users { get; set; }
+        public DbSet<User> User { get; set; }
         public DbSet<Publications> Publications { get; set; }
 
         public BlogDbContext(DbContextOptions<BlogDbContext> options) : base(options)
