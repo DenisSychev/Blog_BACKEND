@@ -19,7 +19,7 @@ namespace Blog_BACKEND.Controllers
 
         // GET /api/user
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult GetAll()
         {
             var users = _blogDbContext.User.ToList();
 
@@ -27,13 +27,13 @@ namespace Blog_BACKEND.Controllers
         }
 
         // GET api/user/get?guid=6F9619FF-8B86-D011-B42D-00CF4FC964FF
-        [HttpGet("/{guid}")]
+        [HttpGet]
         public IActionResult GetUser(Guid guid)
         {
             var user = _blogDbContext.User.FirstOrDefault(u => u.UserGUID == guid);
 
             if (user == null)
-                return NotFound(string.Format("Такого пользователя нет в системе", guid));
+                return NotFound(string.Format("Такого пользователя нет в системе"));
 
             return Ok(new
             {
