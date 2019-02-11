@@ -7,8 +7,8 @@ namespace Blog_BACKEND.Data
         public int Id { get; set; }
         public string Text { get; set; }
         public int Publication { get; set; }
-        public int Author { get; set; }
-        public DateTime CreationDate { get; set; }
+        public string Author { get; set; }
+        public int CreationDate { get; set; }
         public int IsDeleted { get; set; }
     }
 }

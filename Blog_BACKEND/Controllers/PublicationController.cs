@@ -9,29 +9,36 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Blog_BACKEND.Controllers
 {
+    [ApiController]
     [Route("api/[controller]")]
-    public class PublicationController : Controller
+    public class PublicationsController : Controller
     {
 
         private readonly BlogDbContext _blogDbContext;
 
-        public PublicationController(BlogDbContext blogDbContext)
+        public PublicationsController(BlogDbContext blogDbContext)
         {
             _blogDbContext = blogDbContext;
         }
 
-        // GET: api/values
-        [HttpGet]
-        public IEnumerable<string> GetAll()
+        /// <summary>
+        /// Gets all.
+        /// </summary>
+        /// <returns>Получение всех публикаций</returns>
+        [HttpGet("")]
+        public IActionResult GetAll()
         {
-            return new string[] { "value1", "value2" };
+            var publications = _blogDbContext.Publications.ToList();
+
+            return Ok(publications);
         }
 
-        // GET api/publication/get?id=1
-        [HttpGet]
+
+        // GET api/publication/1
+        [HttpGet("{id:int}")]
         public IActionResult GetPublication(int id)
         {
-            var publication = _blogDbContext.Publications.FirstOrDefault(p => p.Id == id);
+            var publication = _blogDbContext.Publications.FirstOrDefault(p => p.IdPublication == id);
 
             if (publication == null) return NotFound(string.Format("Такой публикации нет"));
 

@@ -17,7 +17,10 @@ namespace Blog_BACKEND.Controllers
             _blogDbContext = blogDbContext;
         }
 
-        // GET /api/user
+        /// <summary>
+        /// GET /api/user
+        /// </summary>
+        /// <returns>Все пользователи. Массив объектов</returns>
         [HttpGet("")]
         public IActionResult GetAll()
         {
@@ -26,7 +29,11 @@ namespace Blog_BACKEND.Controllers
             return Ok(users);
         }
 
-        // GET api/user/6F9619FF-8B86-D011-B42D-00CF4FC964FF
+        /// <summary>
+        /// GET api/user/6F9619FF-8B86-D011-B42D-00CF4FC964FF
+        /// </summary>
+        /// <returns>Конкретного пользователя. Массив с объектом</returns>
+        /// <param name="id">Identifier.</param>
         [HttpGet("{id:guid}")]
         public IActionResult GetUser(string id)
         {
