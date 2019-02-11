@@ -6,8 +6,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Blog_BACKEND.Controllers
 {
-    [Route("api/[controller]/[action]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
         private readonly BlogDbContext _blogDbContext;
@@ -15,10 +15,10 @@ namespace Blog_BACKEND.Controllers
         public UserController(BlogDbContext blogDbContext)
         {
             _blogDbContext = blogDbContext;
-        } 
+        }
 
         // GET /api/user
-        [HttpGet]
+        [HttpGet("")]
         public IActionResult GetAll()
         {
             var users = _blogDbContext.User.ToList();
@@ -26,11 +26,11 @@ namespace Blog_BACKEND.Controllers
             return Ok(users);
         }
 
-        // GET api/user/get?guid=6F9619FF-8B86-D011-B42D-00CF4FC964FF
-        [HttpGet]
-        public IActionResult GetUser(Guid guid)
+        // GET api/user/6F9619FF-8B86-D011-B42D-00CF4FC964FF
+        [HttpGet("{id:guid}")]
+        public IActionResult GetUser(string id)
         {
-            var user = _blogDbContext.User.FirstOrDefault(u => u.UserGUID == guid);
+            var user = _blogDbContext.User.FirstOrDefault(u => u.UserGUID == id);
 
             if (user == null)
                 return NotFound(string.Format("Такого пользователя нет в системе"));
@@ -43,13 +43,7 @@ namespace Blog_BACKEND.Controllers
                 lastDate = user.LastLoginDate
             });
         }
-
-        // GET api/values/5
-        /*[HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
-        {
-            return "value";
-        }*/
+     
 
         // POST api/values
         [HttpPost]
