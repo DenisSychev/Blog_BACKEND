@@ -34,10 +34,10 @@ namespace Blog_BACKEND.Controllers
         /// </summary>
         /// <returns>Конкретного пользователя. Массив с объектом</returns>
         /// <param name="id">Identifier.</param>
-        [HttpGet("{id:guid}")]
-        public IActionResult GetUser(string id)
+        [HttpGet("{id:int}")]
+        public IActionResult GetUser(int id)
         {
-            var user = _blogDbContext.User.FirstOrDefault(u => u.UserGUID == id);
+            var user = _blogDbContext.User.FirstOrDefault(u => u.Id == id);
 
             if (user == null)
                 return NotFound(string.Format("Такого пользователя нет в системе"));
@@ -45,7 +45,7 @@ namespace Blog_BACKEND.Controllers
             return Ok(new
             {
                 firstName = user.FirstName,
-                userGuid = user.UserGUID,
+                lastName = user.LastName,
                 creationDate = user.CreationDate,
                 lastDate = user.LastLoginDate
             });

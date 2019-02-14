@@ -20,7 +20,7 @@ namespace Blog_BACKEND
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            services.AddDbContext<BlogDbContext>(options => options.UseSqlite("Data Source=C:/temp/Blog/Blog_BACKEND/DB/blogs.db"));
+            services.AddDbContext<BlogDbContext>(options => options.UseSqlite("Data Source=/Users/athenenoctua/Projects/Blog/Backend/DB/blogs.db"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

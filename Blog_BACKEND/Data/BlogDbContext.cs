@@ -7,7 +7,7 @@ namespace API.Data
     {
 
         public DbSet<User> User { get; set; }
-        public DbSet<Publications> Publications { get; set; }
+        public DbSet<Publication> Publication { get; set; }
 
         public BlogDbContext(DbContextOptions<BlogDbContext> options) : base(options)
         {
@@ -16,7 +16,17 @@ namespace API.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>().HasMany(u => u.Publications);
+            modelBuilder.Entity<User>();
+
+            modelBuilder.Entity<Publication>(entity =>
+            {
+                entity.Property(e => e.UserId)
+                    .HasColumnName("UserId");
+
+                entity.HasOne(pub => pub.User)
+                    .WithMany(u => u.Publication)
+                    .HasForeignKey(pub => pub.UserId);
+            });
         }
 
 

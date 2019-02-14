@@ -11,12 +11,12 @@ namespace Blog_BACKEND.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class PublicationsController : Controller
+    public class PublicationController : ControllerBase
     {
 
         private readonly BlogDbContext _blogDbContext;
 
-        public PublicationsController(BlogDbContext blogDbContext)
+        public PublicationController(BlogDbContext blogDbContext)
         {
             _blogDbContext = blogDbContext;
         }
@@ -28,7 +28,7 @@ namespace Blog_BACKEND.Controllers
         [HttpGet("")]
         public IActionResult GetAll()
         {
-            var publications = _blogDbContext.Publications.ToList();
+            var publications = _blogDbContext.Publication.ToList();
 
             return Ok(publications);
         }
@@ -38,7 +38,7 @@ namespace Blog_BACKEND.Controllers
         [HttpGet("{id:int}")]
         public IActionResult GetPublication(int id)
         {
-            var publication = _blogDbContext.Publications.FirstOrDefault(p => p.IdPublication == id);
+            var publication = _blogDbContext.Publication.FirstOrDefault(p => p.Id == id);
 
             if (publication == null) return NotFound(string.Format("Такой публикации нет"));
 
@@ -46,7 +46,7 @@ namespace Blog_BACKEND.Controllers
             {
                 title = publication.Title,
                 text = publication.Text,
-                author = publication.Author,
+                author = publication.UserId,
             });
         }
 
