@@ -44,6 +44,7 @@ namespace Blog_BACKEND.Controllers
 
             return Ok(new
             {
+                id = user.Id,
                 firstName = user.FirstName,
                 lastName = user.LastName,
                 creationDate = user.CreationDate,

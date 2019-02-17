@@ -44,6 +44,7 @@ namespace Blog_BACKEND.Controllers
 
             return Ok(new
             {
+                id = publication.Id,
                 title = publication.Title,
                 text = publication.Text,
                 author = publication.UserId,
