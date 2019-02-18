@@ -16,7 +16,10 @@ namespace API.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>();
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.Property(i => i.Publication).HasColumnName("");
+            });
 
             modelBuilder.Entity<Publication>(entity =>
             {
