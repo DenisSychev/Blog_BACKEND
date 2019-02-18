@@ -19,8 +19,9 @@ namespace Blog_BACKEND
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             services.AddMvc();
-            services.AddDbContext<BlogDbContext>(options => options.UseSqlite("Data Source=/Users/athenenoctua/Projects/Blog/Backend/DB/blogs.db"));
+            services.AddDbContext<BlogDbContext>(options => options.UseSqlite("Data Source=C:/temp/Blog/Blog_BACKEND/DB/blogs.db"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -34,6 +35,9 @@ namespace Blog_BACKEND
             {
                 app.UseHsts();
             }
+
+            // Shows UseCors with CorsPolicyBuilder.
+            app.UseCors(builder => builder.WithOrigins("http://localhost:9000"));
 
             app.UseHttpsRedirection();
             app.UseMvc();
