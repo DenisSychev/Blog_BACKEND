@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -22,41 +23,43 @@ namespace Blog_BACKEND.Controllers
         }
 
         /// <summary>
-        /// Gets all.
+        /// GET api/publication
         /// </summary>
-        /// <returns>Получение всех публикаций</returns>
+        /// <returns>Все публикации. Массив объектов</returns>
         [HttpGet("")]
         public IActionResult GetAll()
         {
             var publications = _blogDbContext.Publication.ToList();
 
+            if (publications == null)
+                return NotFound(string.Format("Публикаций нет"));
+
             return Ok(publications);
         }
 
 
-        // GET api/publication/1
+        /// <summary>
+        /// GET api/publication/1
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Получение публикации по её Id</returns>
+        /// <param name="id">Id публикации</param>
         [HttpGet("{id:int}")]
         public IActionResult GetPublication(int id)
         {
-            var publication = _blogDbContext.Publication.FirstOrDefault(p => p.Id == id);
+            var publication = _blogDbContext.Publication.Include(p => p.User).FirstOrDefault(p => p.Id == id);
 
-            if (publication == null) return NotFound(string.Format("Такой публикации нет"));
+            if (publication == null)
+                return NotFound(string.Format("Такой публикации нет"));
 
             return Ok(new
             {
                 id = publication.Id,
                 title = publication.Title,
                 text = publication.Text,
-                author = publication.UserId,
+                author = publication.User,
             });
-        }
-
-        // GET api/values/5
-        /*[HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }*/
+        }       
 
         // POST api/values
         [HttpPost]

@@ -20,27 +20,30 @@ namespace Blog_BACKEND.Controllers
         /// <summary>
         /// GET /api/user
         /// </summary>
-        /// <returns>Все пользователи. Массив объектов</returns>
+        /// <returns>Все авторы. Массив объектов</returns>
         [HttpGet("")]
         public IActionResult GetAll()
         {
             var users = _blogDbContext.User.ToList();
 
+            if (users == null)
+                return NotFound(string.Format("Авторов нет"));
+
             return Ok(users);
         }
 
         /// <summary>
-        /// GET api/user/6F9619FF-8B86-D011-B42D-00CF4FC964FF
+        /// GET api/user/1
         /// </summary>
-        /// <returns>Конкретного пользователя. Массив с объектом</returns>
-        /// <param name="id">Identifier.</param>
+        /// <returns>Получение автора по его id</returns>
+        /// <param name="id">Id автора</param>
         [HttpGet("{id:int}")]
         public IActionResult GetUser(int id)
         {
             var user = _blogDbContext.User.FirstOrDefault(u => u.Id == id);
 
             if (user == null)
-                return NotFound(string.Format("Такого пользователя нет в системе"));
+                return NotFound(string.Format("Данных этого автора в системе нет"));
 
             return Ok(new
             {
