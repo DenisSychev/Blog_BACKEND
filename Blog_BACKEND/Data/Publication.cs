@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Blog_BACKEND.Models;
 
 namespace Blog_BACKEND.Data
 {

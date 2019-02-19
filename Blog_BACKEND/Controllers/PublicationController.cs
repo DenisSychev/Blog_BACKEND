@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Data;
+using Blog_BACKEND.Data;
+using Blog_BACKEND.Models;
+using Blog_BACKEND.Models.Mappers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -31,10 +34,9 @@ namespace Blog_BACKEND.Controllers
         {
             var publications = _blogDbContext.Publication.ToList();
 
-            if (publications == null)
-                return NotFound(string.Format("Публикаций нет"));
-
-            return Ok(publications);
+            return Ok(publications
+                .Select(PublicationMapper.ToResponseModel)
+                .ToList());
         }
 
 
@@ -47,18 +49,14 @@ namespace Blog_BACKEND.Controllers
         [HttpGet("{id:int}")]
         public IActionResult GetPublication(int id)
         {
-            var publication = _blogDbContext.Publication.Include(p => p.User).FirstOrDefault(p => p.Id == id);
+            var publication = _blogDbContext.Publication
+                .Include(p => p.User)
+                .FirstOrDefault(p => p.Id == id);
 
             if (publication == null)
                 return NotFound(string.Format("Такой публикации нет"));
 
-            return Ok(new
-            {
-                id = publication.Id,
-                title = publication.Title,
-                text = publication.Text,
-                author = publication.User,
-            });
+            return Ok(PublicationMapper.ToResponseModel(publication));
         }       
 
         // POST api/values
