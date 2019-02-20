@@ -11,10 +11,14 @@ namespace Blog_BACKEND.Models.Mappers
                 Id = publication.Id,
                 Text = publication.Text,
                 Title = publication.Title,
-                CreationDate = publication.CreationDate
+                CreationDate = publication.CreationDate,
+                Author = new UserResponse
+                {
+                    Id = publication.User.Id,
+                    FirstName = publication.User.FirstName,
+                    LastName = publication.User.LastName
+                }
             };
-
-            // TODO: пробросить автора публикации ;)
             
             return result;
         }

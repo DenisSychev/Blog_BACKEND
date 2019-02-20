@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using API.Data;
-using Blog_BACKEND.Data;
-using Blog_BACKEND.Models;
+﻿using API.Data;
 using Blog_BACKEND.Models.Mappers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using System.Linq;
 
 namespace Blog_BACKEND.Controllers
 {
@@ -32,7 +25,7 @@ namespace Blog_BACKEND.Controllers
         [HttpGet("")]
         public IActionResult GetAll()
         {
-            var publications = _blogDbContext.Publication.ToList();
+            var publications = _blogDbContext.Publication.Include(p => p.User).ToList();
 
             return Ok(publications
                 .Select(PublicationMapper.ToResponseModel)
