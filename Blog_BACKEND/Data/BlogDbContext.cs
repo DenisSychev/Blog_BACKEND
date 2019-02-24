@@ -8,6 +8,7 @@ namespace API.Data
 
         public DbSet<User> User { get; set; }
         public DbSet<Publication> Publication { get; set; }
+        public DbSet<Comment> Comment { get; set; }
 
         public BlogDbContext(DbContextOptions<BlogDbContext> options) : base(options)
         {
@@ -26,6 +27,17 @@ namespace API.Data
                 entity.HasOne(pub => pub.User)
                     .WithMany(u => u.Publication)
                     .HasForeignKey(pub => pub.UserId);
+            });
+
+            modelBuilder.Entity<Comment>(entity =>
+            {
+                entity.Property(p => p.PublicationId).HasColumnName("PublicationId");
+
+
+
+                entity.Property(u => u.UserId).HasColumnName("UserId");
+
+                entity.HasOne(com => com.User).WithMany(u => u.Comment).HasForeignKey(com => com.UserId);
             });
         }
 

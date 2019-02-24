@@ -12,5 +12,7 @@ namespace Blog_BACKEND.Data
         public int LastLoginDate { get; set;  }
 
         public List<Publication> Publication { get; set; }
+
+        public List<Comment> Comment { get; set; }
     }
 }
