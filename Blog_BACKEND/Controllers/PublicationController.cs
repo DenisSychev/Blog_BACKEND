@@ -25,7 +25,7 @@ namespace Blog_BACKEND.Controllers
         [HttpGet("")]
         public IActionResult GetAll()
         {
-            var publications = _blogDbContext.Publication.Include(p => p.User).ToList();
+            var publications = _blogDbContext.Publications.Include(p => p.User).ToList();
 
             return Ok(publications
                 .Select(PublicationMapper.ToResponseModel)
@@ -42,7 +42,7 @@ namespace Blog_BACKEND.Controllers
         [HttpGet("{id:int}")]
         public IActionResult GetPublication(int id)
         {
-            var publication = _blogDbContext.Publication
+            var publication = _blogDbContext.Publications
                 .Include(p => p.User)
                 .FirstOrDefault(p => p.Id == id);
 

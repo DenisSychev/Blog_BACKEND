@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Blog_BACKEND.Data
+﻿namespace Blog_BACKEND.Data
 {
     public class Comment
     {

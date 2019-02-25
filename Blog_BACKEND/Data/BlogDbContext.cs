@@ -7,8 +7,8 @@ namespace API.Data
     {
 
         public DbSet<User> User { get; set; }
-        public DbSet<Publication> Publication { get; set; }
-        public DbSet<Comment> Comment { get; set; }
+        public DbSet<Publication> Publications { get; set; }
+        public DbSet<Comment> Comments { get; set; }
 
         public BlogDbContext(DbContextOptions<BlogDbContext> options) : base(options)
         {
@@ -21,26 +21,14 @@ namespace API.Data
 
             modelBuilder.Entity<Publication>(entity =>
             {
-                entity.Property(e => e.UserId)
-                    .HasColumnName("UserId");
-
-                entity.HasOne(pub => pub.User)
-                    .WithMany(u => u.Publication)
-                    .HasForeignKey(pub => pub.UserId);
+                entity.HasOne(pub => pub.User).WithMany(u => u.Publications).HasForeignKey(pub => pub.UserId);
             });
 
             modelBuilder.Entity<Comment>(entity =>
             {
-                entity.Property(p => p.PublicationId).HasColumnName("PublicationId");
-
-
-
-                entity.Property(u => u.UserId).HasColumnName("UserId");
-
-                entity.HasOne(com => com.User).WithMany(u => u.Comment).HasForeignKey(com => com.UserId);
+                entity.HasOne(com => com.User).WithMany(u => u.Comments).HasForeignKey(com => com.UserId);                
             });
         }
-
 
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Blog_BACKEND.Data
 {
@@ -11,8 +10,8 @@ namespace Blog_BACKEND.Data
         public int CreationDate { get; set; }
         public int LastLoginDate { get; set;  }
 
-        public List<Publication> Publication { get; set; }
+        public ICollection<Publication> Publications { get; set; }
 
-        public List<Comment> Comment { get; set; }
+        public ICollection<Comment> Comments { get; set; }
     }
 }

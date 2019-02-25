@@ -8,5 +8,7 @@ namespace Blog_BACKEND.Models
         public int CreationDate { get; set; }
         
         public UserResponse Author { get; set; }
+
+        public CommentResponse Comment { get; set; }
     }
 }
