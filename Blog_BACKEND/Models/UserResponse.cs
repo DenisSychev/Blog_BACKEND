@@ -6,6 +6,6 @@ namespace Blog_BACKEND.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public int CreationDate { get; set; }
-        public int LastLoginDate { get; set;  }
+        public int LastLoginDate { get; set; }
     }
 }
