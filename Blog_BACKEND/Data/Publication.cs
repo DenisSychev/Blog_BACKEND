@@ -11,7 +11,7 @@ namespace Blog_BACKEND.Data
         public int CreationDate { get; set; }
         public int IsDeleted { get; set; }
 
-        public User User { get; set; }
+        public User Author { get; set; }
 
         public ICollection<Comment> Comments { get; set; }
     } 

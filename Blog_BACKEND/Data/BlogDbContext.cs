@@ -17,16 +17,22 @@ namespace API.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>();
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.ToTable("User");
+            });
 
             modelBuilder.Entity<Publication>(entity =>
             {
-                entity.HasOne(pub => pub.User).WithMany(u => u.Publications).HasForeignKey(pub => pub.UserId);
+                entity.ToTable("Publication");
+                entity.HasOne(pub => pub.Author).WithMany(u => u.Publications).HasForeignKey(pub => pub.UserId);
             });
 
             modelBuilder.Entity<Comment>(entity =>
             {
-                entity.HasOne(com => com.User).WithMany(u => u.Comments).HasForeignKey(com => com.UserId);                
+                entity.ToTable("Comment");
+                entity.HasOne(com => com.Author).WithMany(u => u.Comments).HasForeignKey(com => com.UserId);
+                entity.HasOne(com => com.Publication).WithMany(pub => pub.Comments).HasForeignKey(com => com.PublicationId);             
             });
         }
 

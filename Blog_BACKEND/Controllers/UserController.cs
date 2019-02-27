@@ -24,10 +24,8 @@ namespace Blog_BACKEND.Controllers
         [HttpGet("")]
         public IActionResult GetAll()
         {
-            var users = _blogDbContext.User.ToList();
-
-            if (users == null)
-                return NotFound(string.Format("Авторов нет"));
+            var users = _blogDbContext.User.AsNoTracking()
+                .ToList();
 
             return Ok(users);
         }
@@ -40,7 +38,8 @@ namespace Blog_BACKEND.Controllers
         [HttpGet("{id:int}")]
         public IActionResult GetUser(int id)
         {
-            var user = _blogDbContext.User.FirstOrDefault(u => u.Id == id);
+            var user = _blogDbContext.User.AsNoTracking()
+                .FirstOrDefault(u => u.Id == id);
 
             if (user == null)
                 return NotFound(string.Format("Данных этого автора в системе нет"));
