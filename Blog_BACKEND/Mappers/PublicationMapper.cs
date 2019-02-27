@@ -14,9 +14,9 @@ namespace Blog_BACKEND.Models.Mappers
                 CreationDate = publication.CreationDate,
                 Author = new UserResponse
                 {
-                    Id = publication.User.Id,
-                    FirstName = publication.User.FirstName,
-                    LastName = publication.User.LastName
+                    Id = publication.Author.Id,
+                    FirstName = publication.Author.FirstName,
+                    LastName = publication.Author.LastName
                 }
             };
             
